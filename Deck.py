@@ -1,21 +1,15 @@
-from typing import List
-import random
+from random import randint
 
 
 class Card(object):
-    face = ""
-    suit = ""
-    value = 0
-    name = ""
-    isAce = False
-
-    def __init__(self, facev, suit, value):
+    def __init__(self, suit, value):
+        self.isAce = False
         if value == 1:
             self.face = "Ace"
             self.value = 1
             self.isAce = True
         if 2 <= value <= 10:
-            self.face = facev
+            self.face = str(value)
             self.value = value
         if value == 11:
             self.face = "Jack"
@@ -28,30 +22,24 @@ class Card(object):
             self.value = 10
 
         self.suit = suit
-        self.name = self.face + " of " + self.suit
+        self.cardname = f"{self.face} of {self.suit}"
 
 
 def getdeck(numofdecks):
-    # type: (List[Card]) -> object
-    returnDeck = []  # type: List[Card]
+    returnDeck = []
     for deck in range(0, numofdecks):
         suits = ["Diamonds", "Hearts", "Clubs", "Spades"]
         for suit in suits:
-            for x in range (1, 14):
-                returnDeck.append(Card(str(x), suit, x))
-    return returnDeck
-
-
-def GetRand(x, y):
-    return random.randint(x, y)
+            for x in range(1, 14):
+                returnDeck.append(Card(suit, x))
+    return ShuffleDeck(returnDeck)
 
 
 def ShuffleDeck(Deck):
-    returnDeck = []
-    leng = len(Deck)
-    lengt = len(Deck) - 1
-    for x in range(0, leng):
-        RNG = random.randint(0, lengt)
-        returnDeck.append(Deck.pop(RNG))
-        lengt = lengt - 1
-    return returnDeck
+    returndeck = []
+    leng = len(Deck) - 1
+    for x in range(0, len(Deck)):
+        rng = randint(0, leng)
+        returndeck.append(Deck.pop(rng))
+        leng = leng - 1
+    return returndeck
